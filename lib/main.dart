@@ -1,3 +1,44 @@
+import 'package:flutter/material.dart';
+import 'package:flutterapp/HomeScreen.dart';
+import 'map.dart';
+import 'Login.dart';
+import 'Signup.dart';
+import 'HomeScreen.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
+  final routes = <String, WidgetBuilder>{
+    LoginPage.tag: (context) => LoginPage(),
+    MapScreen.tag: (context) => MapScreen(),
+    Signup.tag: (context) => Signup(),
+    HomePage.tag: (context) => HomePage(),
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      //home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: LoginPage(),
+      routes: routes,
+    );
+  }
+}
+
+
+
+
+
+
+
+
+
 // import 'package:flutter/material.dart';
 // import 'package:firebase_messaging/firebase_messaging.dart';
 
@@ -100,72 +141,123 @@
 //   }
 // }
 
-import 'dart:async';
-
-import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-
-void main() => runApp(MyApp());
-
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  Completer<GoogleMapController> _controller = Completer();
-
-  static const LatLng _center = const LatLng(13.8203642, 100.5133254);
 
 
-  void _onMapCreated(GoogleMapController controller) {
-    _controller.complete(controller);
-  }
 
-  FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
 
-  @override
-  void initState() {
-    super.initState();
-    _firebaseMessaging.getToken().then((token){
-      print("Token is here see me now: ");
-      // print(token);
-      print(token);
-    });
-  }
 
-  Set<Marker> ewtcMarker() {
-    return <Marker>[
-      Marker(
-        position: _center,
-        markerId: MarkerId('location'),
-        infoWindow: InfoWindow(
-          title: 'My Location'
-        ),
-      ),
-    ].toSet();
-  }
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Maps'),
-          backgroundColor: Colors.green[700],
-        ),
-        body: GoogleMap(
-          onMapCreated: _onMapCreated,
-          myLocationEnabled: true,
-          initialCameraPosition: CameraPosition(
-            target: _center,
-            zoom: 18.0,
-          ),
-          mapType: MapType.normal,
-          markers: ewtcMarker(),   
-        ),
-      ),
-    );
-  }
-}
+
+
+// import 'dart:async';
+// import 'dart:convert';
+// import 'dart:ffi';
+
+
+// import 'package:flutter/material.dart';
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
+// import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:http/http.dart' as http;
+
+// void main() => runApp(MyApp());
+
+// class MyApp extends StatefulWidget {
+//   @override
+//   _MyAppState createState() => _MyAppState();
+// }
+
+// class _MyAppState extends State<MyApp> {
+//   Completer<GoogleMapController> _controller = Completer();
+
+//   //final String url = "https://glacial-reef-86829.herokuapp.com/elder/4/fall";
+//   static double _data_lat;
+//   static double _data_lng;
+
+
+//   static const LatLng _center = const LatLng(13.8761526, 100.4099434);
+
+
+//   void _onMapCreated(GoogleMapController controller) {
+//     _controller.complete(controller);
+//   }
+
+//   FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     this.FetchJSON();
+//     _firebaseMessaging.getToken().then((token){
+//       print("Token is here see me now: ");
+//       // print(token);
+//       print(token);
+//     });
+//   }
+
+//   FetchJSON() async{
+//     var response = await http.get(
+//       "https://glacial-reef-86829.herokuapp.com/elder/4/fall",
+//       headers: {"Accept": "application/json"}
+//     );
+    
+//     if (response.statusCode == 200) {
+//       print("In Condition");
+//       var dataResponse = json.decode(response.body);
+//       print('body: [${response.body}]');
+//       //var datajson = json.decode(dataResponse[0]);
+
+//       // _data_lat = dataResponse['lat'];
+//       // _data_lng = dataResponse['lng'];
+
+//       // print("Latitude: $_data_lat");
+//       // print("longitude: $_data_lng");
+//     } else {
+//       print('Something went wrong. \nResponse Code: ${response.statusCode}');
+//     }
+//     print(response.body);
+//     print("2");
+
+
+//     // setState(() {
+//     //   var datajson = json.decode(response.body);
+//     //     _data_lat = datajson['lat'];
+//     //     _data_lng = datajson['lng'];
+//     // });
+
+//   }
+
+
+//   Set<Marker> ewtcMarker() {
+//     return <Marker>[
+//       Marker(
+//         position: _center,
+//         markerId: MarkerId('location'),
+//         infoWindow: InfoWindow(
+//           title: 'My Location',
+//         ),
+//       ),
+//     ].toSet();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: Scaffold(
+//         appBar: AppBar(
+//           title: Text('Maps'),
+//           backgroundColor: Colors.green[700],
+//         ),
+//         body: GoogleMap(
+//           onMapCreated: _onMapCreated,
+//           myLocationEnabled: true,
+//           initialCameraPosition: CameraPosition(
+//             target: _center,
+//             zoom: 18.0,
+//           ),
+//           mapType: MapType.normal,
+//           markers: ewtcMarker(),   
+//         ),
+//       ),
+//     );
+//   }
+// }
